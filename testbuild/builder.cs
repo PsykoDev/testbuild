@@ -23,6 +23,7 @@ namespace testbuild
                 var referencePaths = new List<string> {
                     typeof(object).GetTypeInfo().Assembly.Location,
                     typeof(Console).GetTypeInfo().Assembly.Location,
+                    Path.Combine(basePath, "System.dll"),
                     Path.Combine(basePath, "System.Runtime.dll"),
                     Path.Combine(basePath, "System.Runtime.Extensions.dll"),
                     Path.Combine(basePath, "mscorlib.dll")
@@ -71,11 +72,8 @@ namespace testbuild
                                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static |
                                 BindingFlags.Default);
 
-                            if (method.Invoke(instance, BindingFlags.Instance, null, new object[] { new string[] { "" } }, null).Equals("01234567891011121314"))
-                            {
-                                Console.WriteLine("OK");
-                            }
-                        
+                            method.Invoke(instance, BindingFlags.Instance, null, new object[] { new string[] { "" } }, null);
+
                             _output.Append(outputCapture.Captured.ToString());
                             Console.WriteLine("Captured Data "+_output.ToString());
                             
